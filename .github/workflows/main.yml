@@ -1,24 +1,37 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Sync Upstream
 
 env:
+  # Required, URL to upstream (fork base)
   UPSTREAM_URL: "https://github.com/iamadamdev/bypass-paywalls-chrome.git"
-  DOWNSTREAM_BRANCH: "master"
-# Controls when the action will run.
+  # Optional, defaults to main
+  UPSTREAM_BRANCH: "master"
+  # Optional, defaults to UPSTREAM_BRANCH
+  DOWNSTREAM_BRANCH: ""
+  # Optional merge arguments
+  MERGE_ARGS: ""
+  # Optional push arguments
+  PUSH_ARGS: ""
+
+# This runs every day on 1801 UTC
 on:
+  # Or on push, if for mirror it runs on workflow setup and changes
+  push:
   schedule:
     - cron: '1 18 * * *'
+  # Allows manual workflow run (must in default branch to work)
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
       - name: GitHub Sync to Upstream Repository
-        uses: dabreadman/sync-upstream-repo@v0.1.2.b
+        uses: dabreadman/sync-upstream-repo@v1.0.0.b
         with: 
           upstream_repo: ${{ env.UPSTREAM_URL }}
-          branch: ${{ env.DOWNSTREAM_BRANCH }}
+          upstream_branch: ${{ env.UPSTREAM_BRANCH }}
+          downstream_branch: ${{ env.DOWNSTREAM_BRANCH }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          merge_args: ${{ env.MERGE_ARGS }}
+          push_args: ${{ env.PUSH_ARGS }}
+
