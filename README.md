@@ -50,7 +50,6 @@
 [De Speld](https://speld.nl)\
 [De Tijd](https://www.tijd.be)\
 [De Volkskrant](https://www.volkskrant.nl)\
-[DELFI](https://www.delfi.ee)\
 [DeMorgen](https://www.demorgen.be)\
 [Denver Post](https://www.denverpost.com)\
 [Diario Financiero](https://www.df.cl)\
@@ -64,6 +63,7 @@
 [Encyclopedia Britannica](https://www.britannica.com)\
 [Estadão](https://www.estadao.com.br)\
 [Examiner](https://www.examiner.com.au)\
+[Expansión](https://www.expansion.com)\
 [Financial News](https://www.fnlondon.com)\
 [Financial Post](https://www.financialpost.com)\
 [Financial Times](https://www.ft.com)\

@@ -493,11 +493,6 @@ if (matchDomain('elmercurio.com')) {
 } else if (matchDomain('vanityfair.com')) {
   const paywall = document.querySelector('.paywall-bar');
   removeDOMElement(paywall);
-} else if (matchDomain('delfi.ee')) {
-  // Remove 'adblocker-detected' notification overlay
-  document.body.classList.remove('U-overflow-hidden');
-  const el = document.getElementsByClassName('C-ad-block-layer')[0];
-  removeDOMElement(el);
 } else if (matchDomain(['postimees.ee', 'elu24.ee'])) {
   setTimeout(function () {
     // Remove 'adblocker-detected' footer notification
@@ -622,6 +617,26 @@ if (matchDomain('elmercurio.com')) {
   const body = document.querySelector('body');
   if (body) {
     body.setAttribute('style', 'position:relative !important;');
+  }
+} else if (matchDomain('expansion.com')) {
+  const premium = document.querySelector('.ue-c-article__premium');
+  const url = window.location.href;
+  if (!url.includes('/amp.' + 'expansion.com' + '/')) {
+    if (premium) {
+      removeDOMElement(premium);
+      window.location.href = window.location.href.replace('/www.', '/amp.');
+    }
+  } else {
+    const paywall = document.querySelector('div[amp-access="authorized!=true"]');
+    if (paywall) {
+      removeDOMElement(paywall);
+      const divHidden = document.querySelector('div[amp-access="authorized=true"]');
+      if (divHidden) {
+        divHidden.removeAttribute('amp-access-hide');
+      }
+    }
+    const advertising = document.querySelectorAll('.advertising, amp-embed');
+    removeDOMElement(...advertising);
   }
 }
 
