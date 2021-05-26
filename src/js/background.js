@@ -18,7 +18,6 @@ const allowCookies = [
   'brisbanetimes.com.au',
   'canberratimes.com.au',
   'cen.acs.org',
-  'chicagobusiness.com',
   'demorgen.be',
   'denverpost.com',
   'destentor.nl',
@@ -76,7 +75,8 @@ const allowCookies = [
   'elmundo.es',
   'time.com',
   'zeit.de',
-  'expansion.com'
+  'expansion.com',
+  'dailytelegraph.com.au'
 ];
 
 // Removes cookies after page load
@@ -89,7 +89,6 @@ const removeCookies = [
   'brisbanetimes.com.au',
   'canberratimes.com.au',
   'cen.acs.org',
-  'chicagobusiness.com',
   'demorgen.be',
   'denverpost.com',
   'destentor.nl',
@@ -160,7 +159,6 @@ const useGoogleBotSites = [
   'adelaidenow.com.au',
   'barrons.com',
   'couriermail.com.au',
-  'dailytelegraph.com.au',
   'fd.nl',
   'genomeweb.com',
   'heraldsun.com.au',
@@ -181,7 +179,8 @@ const useGoogleBotSites = [
   'df.cl',
   'ft.com',
   'wired.com',
-  'zeit.de'
+  'zeit.de',
+  'washingtonpost.com'
 ];
 
 // Override User-Agent with Bingbot
@@ -235,7 +234,6 @@ const blockedRegexes = {
   'sloanreview.mit.edu': /(.+\.tinypass\.com\/.+|.+\.netdna-ssl\.com\/wp-content\/themes\/smr\/assets\/js\/libs\/welcome-ad\.js)/,
   'latercera.com': /.+\.cxense\.com\/+/,
   'lesechos.fr': /.+\.tinypass\.com\/.+/,
-  'washingtonpost.com': /.+\.washingtonpost\.com\/.+\/pwapi-proxy\.min\.js/,
   'thehindu.com': /ajax\.cloudflare\.com\/cdn-cgi\/scripts\/.+\/cloudflare-static\/rocket-loader\.min\.js/,
   'technologyreview.com': /.+\.blueconic\.net\/.+/,
   'spectator.us': /(cdn\.cxense\.com\/.+|\.tinypass\.com\/.+)/,
@@ -244,7 +242,9 @@ const blockedRegexes = {
   'time.com': /\/time\.com\/dist\/meter-wall-client-js\..+\.js/,
   'thestar.com': /\.com\/api\/overlaydata/,
   'elpais.com': /(\.epimg\.net\/js\/.+\/(noticia|user)\.min\.js|\/elpais\.com\/arc\/subs\/p\.min\.js|cdn\.ampproject\.org\/v\d\/amp-(access|(sticky-)?ad|consent)-.+\.js)/,
-  'expansion.com': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/
+  'expansion.com': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/,
+  'chicagobusiness.com': /(\.tinypass\.com\/|\.chicagobusiness\.com\/.+\/js\/js_.+\.js)/,
+  'dailytelegraph.com.au': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/
 };
 
 const userAgentDesktop = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
@@ -306,6 +306,18 @@ function updateBadge (activeTab) {
 function getBadgeText (currentUrl) {
   return currentUrl && isSiteEnabled({ url: currentUrl }) ? 'ON' : '';
 }
+
+// AMP redirect for dailytelegraph.com.au
+extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
+  if (!isSiteEnabled(details)) {
+    return;
+  }
+  const updatedUrl = decodeURIComponent(details.url.split('&dest=')[1].split('&')[0]).replace('www.', 'amp.');
+  return { redirectUrl: updatedUrl };
+},
+{ urls: ['*://www.dailytelegraph.com.au/subscribe/*'], types: ['main_frame'] },
+['blocking']
+);
 
 // Disable javascript for these sites
 extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
