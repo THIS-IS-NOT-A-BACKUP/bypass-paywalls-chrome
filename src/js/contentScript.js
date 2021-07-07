@@ -1,4 +1,4 @@
-if (!matchDomain(['seekingalpha.com', 'sfchronicle.com', 'cen.acs.org', 'thetimes.co.uk', 'elmundo.es'])) {
+if (!matchDomain(['seekingalpha.com', 'sfchronicle.com', 'cen.acs.org', 'elmundo.es'])) {
   window.localStorage.clear();
 }
 
@@ -99,12 +99,17 @@ if (matchDomain('elmercurio.com')) {
       }
     }, 300); // Delay (in milliseconds)
   } else {
-    function defaultPaywall (element) {
+    const url = window.location.href;
+    function main (element) {
       removeDOMElement(element);
-      const url = window.location.href;
-      if (!url.includes('outputType=amp')) { window.location.href = url.split('?')[0] + '?outputType=amp'; }
+      window.location.href = url.split('?')[0] + '?outputType=amp';
     }
-    waitDOMElement('div[id^="paywall-"]', 'DIV', defaultPaywall, false);
+    if (!url.includes('outputType=amp')) {
+      waitDOMElement('div[id^="paywall-"]', 'DIV', main, false);
+    } else {
+      const subscriptionsSections = document.querySelectorAll('[subscriptions-section="content"]');
+      for (const subscriptionsSection of subscriptionsSections) { subscriptionsSection.removeAttribute('subscriptions-section'); }
+    }
   }
 } else if (matchDomain('wsj.com') && !matchDomain('cn.wsj.com')) {
   if (window.location.href.includes('/articles/')) {
@@ -506,11 +511,6 @@ if (matchDomain('elmercurio.com')) {
     const adblockNotif = document.querySelector('.adblock-notif');
     removeDOMElement(adblockNotif);
   }, 800); // Delay (in milliseconds)
-} else if (matchDomain('thetimes.co.uk')) {
-  const block = document.querySelector('.subscription-block');
-  const adBlock = document.getElementById('ad-article-inline');
-  const adHeader = document.getElementById('sticky-ad-header');
-  removeDOMElement(block, adBlock, adHeader);
 } else if (matchDomain('themarker.com')) {
   setTimeout(function () {
     const paywall = document.querySelector('[data-test="bottomStrip"]');
