@@ -14,8 +14,6 @@ env:
 
 # This runs every day on 1801 UTC
 on:
-  # Or on push, if for mirror it runs on workflow setup and changes
-  push:
   schedule:
     - cron: '1 18 * * *'
   # Allows manual workflow run (must in default branch to work)
@@ -26,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: GitHub Sync to Upstream Repository
-        uses: dabreadman/sync-upstream-repo@v1.1.0.b
+        uses: dabreadman/sync-upstream-repo@v1.2.0.b
         with: 
           upstream_repo: ${{ env.UPSTREAM_URL }}
           upstream_branch: ${{ env.UPSTREAM_BRANCH }}
