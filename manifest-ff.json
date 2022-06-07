@@ -76,7 +76,8 @@
     "*://*.foreignpolicy.com/*",
     "*://*.bostonglobe.com/*",
     "*://*.theathletic.com/*",
-    "*://*.theathletic.co.uk/*"
+    "*://*.theathletic.co.uk/*",
+    "*://*.hbrchina.org/*"
     ],
       "js": ["src/js/contentScript.js"]
     }
@@ -166,7 +167,6 @@
     "*://*.groene.nl/*",
     "*://*.haaretz.co.il/*",
     "*://*.haaretz.com/*",
-    "*://*.handelsblatt.com/*",
     "*://*.harpers.org/*",
     "*://*.hbr.org/*",
     "*://*.heraldsun.com.au/*",
@@ -281,7 +281,8 @@
     "*://*.reuters.com/*",
     "*://*.expansion.com/*",
     "*://*.theathletic.com/*",
-    "*://*.theathletic.co.uk/*"
+    "*://*.theathletic.co.uk/*",
+    "*://*.hbrchina.org/*"
   ],
   "version": "1.8.0"
 }
