@@ -139,6 +139,7 @@ const defaultSites = {
   'The Herald': 'theherald.com.au',
   'The Hindu': 'thehindu.com',
   'The Irish Times (free articles only)': 'irishtimes.com',
+  'The Japan Times': 'japantimes.co.jp',
   'The Kansas City Star': 'kansascity.com',
   'TheMarker': 'themarker.com',
   'The Mercury News': 'mercurynews.com',
@@ -171,7 +172,6 @@ const defaultSites = {
   'Vulture': 'vulture.com',
   'Winston-Salem Journal': 'journalnow.com',
   'Wired': 'wired.com',
-  'World Politics Review': 'worldpoliticsreview.com',
   'Zeit Online': 'zeit.de',
   '*General Paywall Bypass*': 'generalpaywallbypass'
 };

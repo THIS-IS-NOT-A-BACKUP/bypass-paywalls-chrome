@@ -160,6 +160,7 @@
 [The Herald](https://www.theherald.com.au)\
 [The Hindu](https://www.thehindu.com)\
 [The Irish Times](https://www.irishtimes.com)\
+[The Japan Times](https://www.japantimes.co.jp)\
 [The Kansas City Star](https://www.kansascity.com)\
 [The Mercury News](https://www.mercurynews.com)\
 [The Mercury Tasmania](https://www.themercury.com.au)\
@@ -192,7 +193,6 @@
 [Vulture](https://www.vulture.com)\
 [Winston-Salem Journal](https://journalnow.com)\
 [Wired](https://www.wired.com)\
-[World Politics Review](https://www.worldpoliticsreview.com)\
 [Zeit Online](https://www.zeit.de)
 
 ### Sites with limited number of free articles

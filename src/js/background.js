@@ -123,7 +123,8 @@ const removeCookies = [
   'vulture.com',
   'wsj.com',
   'medium.com',
-  'washingtonpost.com'
+  'washingtonpost.com',
+  'japantimes.co.jp'
 ];
 
 // Contains remove cookie sites above plus any custom sites
@@ -242,7 +243,11 @@ const blockedRegexes = {
   'expansion.com': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/,
   'chicagobusiness.com': /(\.tinypass\.com\/|\.chicagobusiness\.com\/.+\/js\/js_.+\.js)/,
   'dailytelegraph.com.au': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/,
-  'theglobeandmail.com': /(\.theglobeandmail\.com\/pf\/dist\/engine\/react\.js|smartwall\.theglobeandmail\.com\/)/
+  'theglobeandmail.com': /(\.theglobeandmail\.com\/pf\/dist\/engine\/react\.js|smartwall\.theglobeandmail\.com\/)/,
+  'nytimes.com': /(meter-svc\.nytimes\.com\/meter\.js|mwcm\.nyt\.com\/.+\.js|cooking\.nytimes\.com\/api\/.+\/access)/,
+  'latimes.com': /(metering\.platform\.latimes\.com\/|cdn\.ampproject\.org\/v\d\/amp-(access|subscriptions)-.+\.js)/,
+  'theathletic.com': /cdn\.ampproject\.org\/v\d\/amp-(access|subscriptions)-.+\.js/,
+  'japantimes.co.jp': /cdn\.cxense\.com\//
 };
 
 const userAgentDesktop = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
@@ -319,7 +324,8 @@ extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
 
 // Disable javascript for these sites
 extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
-  if (!isSiteEnabled(details) && !enabledSites.includes('generalpaywallbypass')) {
+  const headerReferer = details.originUrl ? details.originUrl : details.initiator;
+  if (!isSiteEnabled(details) && (!enabledSites.includes('generalpaywallbypass') || matchUrlDomain('japantimes.co.jp', headerReferer))) {
     return;
   }
   return { cancel: true };
