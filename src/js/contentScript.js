@@ -446,14 +446,10 @@ if (matchDomain('elmercurio.com')) {
       });
   }, 1000); // Delay (in milliseconds)
 } else if (matchDomain('theatlantic.com')) {
-  // Remove all nudge elements
-  document.querySelectorAll('div[class*="c-nudge"]').forEach(function (el) {
-    removeDOMElement(el);
-  });
-  // Remove all FancyBox ads
-  document.querySelectorAll('div[class*="fancybox"]').forEach(function (el) {
-    removeDOMElement(el);
-  });
+  const images = document.querySelectorAll('img[class*="Image_lazy__"]');
+  for (const elem of images) { removeClassesByPrefix(elem, 'Image_lazy__'); }
+  const banners = document.querySelectorAll('.c-nudge__container, .c-non-metered-nudge, div[class^="ArticleInjector_"]');
+  hideDOMElement(...banners);
 } else if (matchDomain('theathletic.com')) {
   if (!window.location.search.match(/(\?|&)amp/)) {
     const paywall = document.querySelector('div#slideup-paywall');
@@ -641,16 +637,8 @@ if (matchDomain('elmercurio.com')) {
     body.removeAttribute('class');
   }
 } else if (matchDomain('latimes.com')) {
-  const paywall = document.querySelector('metering-modal');
-  const incognitoWall = document.querySelector('metering-toppanel');
-  if (paywall) {
-    removeDOMElement(paywall);
-  } else if (incognitoWall) {
-    removeDOMElement(incognitoWall);
-  }
-  if (paywall || incognitoWall) {
-    document.body.removeAttribute('style');
-  }
+  const ads = document.querySelectorAll('div.enhancement, div.google-dfp-ad-wrapper');
+  hideDOMElement(...ads);
 } else if (matchDomain('foreignpolicy.com')) {
   const contentUngated = document.querySelector('div.content-ungated');
   removeDOMElement(contentUngated);

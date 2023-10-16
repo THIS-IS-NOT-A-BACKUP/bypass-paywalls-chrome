@@ -7,7 +7,8 @@ const restrictions = {
   'seekingalpha.com': /.+seekingalpha\.com\/article\/.+/,
   'techinasia.com': /\.techinasia\.com\/.+/,
   'ft.com': /.+\.ft.com\/content\//,
-  'nytimes.com': /^((?!\/timesmachine\.nytimes\.com\/).)*$/
+  'nytimes.com': /^((?!\/timesmachine\.nytimes\.com\/).)*$/,
+  'theatlantic.com': /^((?!\/newsletters\.theatlantic\.com\/).)*$/
 };
 
 // Don't remove cookies before page load
@@ -67,7 +68,8 @@ const allowCookies = [
   'zeit.de',
   'expansion.com',
   'dailytelegraph.com.au',
-  'washingtonpost.com'
+  'washingtonpost.com',
+  'nytimes.com'
 ];
 
 // Removes cookies after page load
@@ -109,8 +111,7 @@ const removeCookies = [
   'wsj.com',
   'medium.com',
   'washingtonpost.com',
-  'japantimes.co.jp',
-  'nytimes.com'
+  'japantimes.co.jp'
 ];
 
 // Contains remove cookie sites above plus any custom sites
@@ -156,7 +157,8 @@ const useGoogleBotSites = [
   'df.cl',
   'ft.com',
   'wired.com',
-  'zeit.de'
+  'zeit.de',
+  'nytimes.com'
 ];
 
 // Override User-Agent with Bingbot
@@ -225,12 +227,13 @@ const blockedRegexes = {
   'dailytelegraph.com.au': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/,
   'theglobeandmail.com': /(\.theglobeandmail\.com\/pf\/dist\/engine\/react\.js|smartwall\.theglobeandmail\.com\/)/,
   'nytimes.com': /(\.nytimes\.com\/meter\.js|mwcm\.nyt\.com\/.+\.js|cooking\.nytimes\.com\/api\/.+\/access)/,
-  'latimes.com': /(metering\.platform\.latimes\.com\/|cdn\.ampproject\.org\/v\d\/amp-(access|subscriptions)-.+\.js)/,
+  'latimes.com': /\.californiatimes\.com\/meteringjs/,
   'theathletic.com': /cdn\.ampproject\.org\/v\d\/amp-(access|subscriptions)-.+\.js/,
   'japantimes.co.jp': /cdn\.cxense\.com\//,
   'scmp.com': /(\.tinypass\.com\/|cdn\.ampproject\.org\/v\d\/amp-access-.+\.js)/,
   'ilmessaggero.it': /(utils\.cedsdigital\.it\/js\/PaywallMeter\.js)/,
-  'washingtonpost.com': /\.washingtonpost\.com\/tetro\/metering\/evaluate/
+  'washingtonpost.com': /\.washingtonpost\.com\/tetro\/metering\/evaluate/,
+  'theatlantic.com': /cdn\.theatlantic\.com\/_next\/static\/chunks\/pages\/.+\/archive\//
 };
 
 const userAgentDesktop = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
@@ -525,6 +528,24 @@ extensionApi.webRequest.onCompleted.addListener(function (details) {
 }, {
   urls: ['<all_urls>']
 });
+
+// nytimes.com fix
+extensionApi.webRequest.onHeadersReceived.addListener(function (details) {
+  if (!isSiteEnabled(details)) {
+    return;
+  }
+  let headers = details.responseHeaders;
+  headers = headers.map(function (header) {
+    if (header.name === 'x-frame-options') { header.value = 'SAMEORIGIN'; }
+    return header;
+  });
+  return {
+    responseHeaders: headers
+  };
+}, {
+  urls: ['*://*.nytimes.com/*']
+},
+['blocking', 'responseHeaders']);
 
 // Google Analytics to anonymously track DAU (Chrome only)
 function initGA () {
