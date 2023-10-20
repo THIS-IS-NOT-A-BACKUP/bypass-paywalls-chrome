@@ -204,7 +204,15 @@ if (matchDomain('elmercurio.com')) {
   const paywall = document.getElementsByClassName('paywall')[0];
   removeDOMElement(paywall);
 } else if (matchDomain('bloomberg.com')) {
-  blockElement('#graphics-paywall-overlay', true);
+  const paywall = document.querySelectorAll('div[id^="fortress-"]');
+  const leaderboard = document.querySelector('div[id^="leaderboard"], div[class^="leaderboard"], div.canopy-container');
+  const ads = document.querySelectorAll('div[data-ad-status], div.dvz-v0-ad, div[class^="FullWidthAd_"]');
+  hideDOMElement(...paywall, leaderboard, ...ads);
+  if (window.location.pathname.startsWith('/live/')) {
+    setInterval(function () {
+      window.localStorage.clear();
+    }, 15 * 60 * 1000);
+  }
 } else if (matchDomain('bloombergquint.com')) {
   const articlesLeftModal = document.getElementsByClassName('paywall-meter-module__story-paywall-container__1UgCE')[0];
   const paywall = document.getElementById('paywallDmp');

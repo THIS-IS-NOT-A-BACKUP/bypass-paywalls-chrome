@@ -8,7 +8,8 @@ const restrictions = {
   'techinasia.com': /\.techinasia\.com\/.+/,
   'ft.com': /.+\.ft.com\/content\//,
   'nytimes.com': /^((?!\/timesmachine\.nytimes\.com\/).)*$/,
-  'theatlantic.com': /^((?!\/newsletters\.theatlantic\.com\/).)*$/
+  'theatlantic.com': /^((?!\/newsletters\.theatlantic\.com\/).)*$/,
+  'bloomberg.com': /^((?!\.bloomberg\.com\/news\/terminal\/).)*$/
 };
 
 // Don't remove cookies before page load
@@ -233,7 +234,8 @@ const blockedRegexes = {
   'scmp.com': /(\.tinypass\.com\/|cdn\.ampproject\.org\/v\d\/amp-access-.+\.js)/,
   'ilmessaggero.it': /(utils\.cedsdigital\.it\/js\/PaywallMeter\.js)/,
   'washingtonpost.com': /\.washingtonpost\.com\/tetro\/metering\/evaluate/,
-  'theatlantic.com': /cdn\.theatlantic\.com\/_next\/static\/chunks\/pages\/.+\/archive\//
+  'theatlantic.com': /cdn\.theatlantic\.com\/_next\/static\/chunks\/pages\/.+\/archive\//,
+  'bloomberg.com': /(\.cm\.bloomberg\.com\/|assets\.bwbx\.io\/s\d\/javelin\/.+\/transporter\/)/
 };
 
 const userAgentDesktop = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
